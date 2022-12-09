@@ -1,0 +1,19 @@
+1. Do you have Microsoft account? If not, please create a Microsoft account.
+2. Register this application
+- Open a browser and navigate to the Azure Active Directory admin center(https://aad.portal.azure.com) and login using a "personal account".
+- Select "Azure Active Directory" in the left-hand navigatin, then select "App registrations" under "Manage".
+- Select "New registration". Enter a name for this application, for example "Get Calendar Events".
+- Set "Supported account type" as desired. I think it would be better to set as "Accounts in any organiztional directory ... and personal Microsoft accounts".
+- Leave "Redirect URI" empty.
+- Select "Register". On the application's "Overview" page, copy the value of the "Application (client) ID" and save it, you will need it in the next step.
+- Select "Authentication" under "Manage". Locate the "Advanced settings" section and change the "Allow public client flows" toggle to "Yes", then choose "Save".
+3. Config this app
+- Set values in .env file like following.
+CLIENT_ID=[Application (client) ID that you copied before]
+- run this command in terminal
+php main.php
+
+***If any questions, please contact me.
+Skype Name: live:.cid.14caff2a32a5ee6c
+
+
