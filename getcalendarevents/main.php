@@ -1,16 +1,11 @@
 <?php
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
-
-// <ProgramSnippet>
-// Enable loading of Composer dependencies
 
 use Beta\Microsoft\Graph\Model\Message;
 
 require_once realpath(__DIR__ . '/vendor/autoload.php');
 require_once 'GraphHelper.php';
 
-print('PHP Graph Tutorial'.PHP_EOL.PHP_EOL);
+print('Get Calendar Events'.PHP_EOL.PHP_EOL);
 
 // Load .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -48,22 +43,18 @@ while ($choice != 0) {
             listUsers();
             break;
         case 5:
-            makeGraphCall();
+            getCalendarEvents();
             break;
         case 0:
         default:
             print('Goodbye...'.PHP_EOL);
     }
 }
-// </ProgramSnippet>
 
-// <InitializeGraphSnippet>
 function initializeGraph() {
     GraphHelper::initializeGraphForUserAuth();
 }
-// </InitializeGraphSnippet>
 
-// <GreetUserSnippet>
 function greetUser() {
     try {
         $user = GraphHelper::getUser();
@@ -80,9 +71,7 @@ function greetUser() {
         print('Error getting user: '.$e->getMessage().PHP_EOL.PHP_EOL);
     }
 }
-// </GreetUserSnippet>
 
-// <DisplayAccessTokenSnippet>
 function displayAccessToken() {
     try {
         $token = GraphHelper::getUserToken();
@@ -91,9 +80,7 @@ function displayAccessToken() {
         print('Error getting access token: '.$e->getMessage().PHP_EOL.PHP_EOL);
     }
 }
-// </DisplayAccessTokenSnippet>
 
-// <ListInboxSnippet>
 function listInbox() {
     try {
         $messages = GraphHelper::getInbox();
@@ -113,9 +100,7 @@ function listInbox() {
         print('Error getting user\'s inbox: '.$e->getMessage().PHP_EOL.PHP_EOL);
     }
 }
-// </ListInboxSnippet>
 
-// <SendMailSnippet>
 function sendMail() {
     try {
         // Send mail to the signed-in user
@@ -136,9 +121,7 @@ function sendMail() {
         print('Error sending mail: '.$e->getMessage().PHP_EOL.PHP_EOL);
     }
 }
-// </SendMailSnippet>
 
-// <ListUsersSnippet>
 function listUsers() {
     try {
         $users = GraphHelper::getUsers();
@@ -158,16 +141,13 @@ function listUsers() {
         print(PHP_EOL.'Error getting users: '.$e->getMessage().PHP_EOL.PHP_EOL);
     }
 }
-// </ListUsersSnippet>
 
-// <MakeGraphCallSnippet>
-function makeGraphCall() {
+function getCalendarEvents() {
     try {
-        $message = GraphHelper::makeGraphCall();
+        $message = GraphHelper::getCalendarEvents();
         var_dump($message->getPage());
     } catch (Exception $e) {
         print(PHP_EOL.'Error making Graph call'.PHP_EOL.PHP_EOL);
     }
 }
-// </MakeGraphCallSnippet>
 ?>

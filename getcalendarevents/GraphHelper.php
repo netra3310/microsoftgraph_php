@@ -1,6 +1,4 @@
 <?php
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT license.
 
 // <UseSnippet>
 use Microsoft\Graph\Graph;
@@ -212,18 +210,11 @@ class GraphHelper {
     // </GetUsersSnippet>
 
     // <MakeGraphCallSnippet>
-    public static function makeGraphCall() {
-        // INSERT YOUR CODE HERE
-        // Note: if using $appClient, be sure to call ensureGraphForAppOnlyAuth
-        // before using it.
-        // GraphHelper::ensureGraphForAppOnlyAuth();
-
-        // Note: if using $userClient, be sure to get the user
-        // token and set it in the client
+    public static function getCalendarEvents() {
         $token = GraphHelper::getUserToken();
         GraphHelper::$userClient->setAccessToken($token);
 
-        $select = '$select=subject,bodyPreview';
+        // $select = '$select=subject,bodyPreview'; // items you want to get from events
         $requestUrl = '/me/events';
 
         return GraphHelper::$userClient->createCollectionRequest('GET', $requestUrl)
