@@ -13,6 +13,15 @@ CLIENT_ID=[Application (client) ID that you copied before]
 - run this command in terminal
 php main.php
 
+---------------------------------------------------------------------------
+If you want to view shared calendar's events, please follow this steps.
+1. Share calendar to view and accept it on your side.
+2. run this command.
+php main.php
+3. If you see the calendars' list, please select number of calendar you want to view.
+That's all!
+
+
 ***If any questions, please contact me.
 Skype Name: live:.cid.14caff2a32a5ee6c
 

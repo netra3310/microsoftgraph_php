@@ -153,15 +153,18 @@ function getCalendarEvents() {
             print('Name: '.$calendar->getName().PHP_EOL);
             print('  ID: '.$calendar->getId().PHP_EOL);
             print('  Owner: '.PHP_EOL);
+            $ids[] = $calendar->getId();
+            $names[] = $calendar->getName();
             $owner = $calendar->getOwner();
+            if (!isset($owner)) {
+                continue;
+            }
             $owner_name = $owner->getName();
             $owner_name = isset($owner_name) ? $owner_name : 'NO NAME';
             $owner_address = $owner->getAddress();
             $owner_address = isset($owner_address) ? $owner_address : 'NO EMAIL';
             print('      name: '.$owner_name.PHP_EOL);
             print('      address: '.$owner_address.PHP_EOL);
-            $ids[] = $calendar->getId();
-            $names[] = $calendar->getName();
         }
 
         $number = 0;
