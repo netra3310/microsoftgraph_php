@@ -144,10 +144,65 @@ function listUsers() {
 
 function getCalendarEvents() {
     try {
-        $message = GraphHelper::getCalendarEvents();
-        var_dump($message->getPage());
+        $message = GraphHelper::getCalendars();
+        $ids = [];
+        $names = [];
+        $number = 0;
+        foreach ($message->getPage() as $calendar) {
+            print('No: '. ++ $number .PHP_EOL);
+            print('Name: '.$calendar->getName().PHP_EOL);
+            print('  ID: '.$calendar->getId().PHP_EOL);
+            print('  Owner: '.PHP_EOL);
+            $owner = $calendar->getOwner();
+            $owner_name = $owner->getName();
+            $owner_name = isset($owner_name) ? $owner_name : 'NO NAME';
+            $owner_address = $owner->getAddress();
+            $owner_address = isset($owner_address) ? $owner_address : 'NO EMAIL';
+            print('      name: '.$owner_name.PHP_EOL);
+            print('      address: '.$owner_address.PHP_EOL);
+            $ids[] = $calendar->getId();
+            $names[] = $calendar->getName();
+        }
+
+        $number = 0;
+
+        echo('Please choose an number of the above Calendars.'.PHP_EOL);
+        echo('Select 0 to return main menu...'.PHP_EOL);
+    
+        $number = (int)readline('');
+
+        if ($number < 1 || $number > count($ids)) {
+            print('Invalid number'.PHP_EOL);
+            return;
+        }
+        $id = $ids[$number - 1];
+        $name = $names[$number - 1];
+
+        print('Selected Calendar Name: '.$name.PHP_EOL);
+        print('   Calendar ID: '.$id.PHP_EOL);
+        print(PHP_EOL);
+
+        $events = GraphHelper::getCalendarEvents($id);
+
+        foreach ($events->getPage() as $event) {
+            print('Subject: '.$event->getSubject().PHP_EOL);
+            print('  BodyPreview: '.$event->getBodyPreview().PHP_EOL);
+            print('  Start Time: '.$event->getStart()->getDateTime().PHP_EOL);
+            print('  end Time: '.$event->getEnd()->getDateTime().PHP_EOL);
+            $organizer = $event->getOrganizer();
+            $email_address = $organizer->getEmailAddress();
+            $name = $email_address->getName();
+            $name = isset($name) ? $name : 'NO NAME';
+            $address = $email_address->getAddress();
+            $address = isset($address) ? $address : 'NO EMAIL';
+            print('  Organizer:'.PHP_EOL);
+            print('      name: '.$name.PHP_EOL);
+            print('      address: '.$address.PHP_EOL);
+            $ids[] = $calendar->getId();
+            $names[] = $calendar->getName();
+        }
     } catch (Exception $e) {
-        print(PHP_EOL.'Error making Graph call'.PHP_EOL.PHP_EOL);
+        print(PHP_EOL.$e->getMessage().PHP_EOL.PHP_EOL);
     }
 }
 ?>

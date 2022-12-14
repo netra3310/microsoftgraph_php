@@ -191,9 +191,7 @@ class GraphHelper {
             throw new Exception('Token endpoint returned '.$error, 100);
         }
     }
-    // </AppOnyAuthConfigSnippet>
 
-    // <GetUsersSnippet>
     public static function getUsers(): Http\GraphCollectionRequest {
         GraphHelper::ensureGraphForAppOnlyAuth();
 
@@ -207,21 +205,35 @@ class GraphHelper {
                                       ->setReturnType(Model\User::class)
                                       ->setPageSize(25);
     }
-    // </GetUsersSnippet>
-
-    // <MakeGraphCallSnippet>
-    public static function getCalendarEvents() {
+    
+    public static function getCalendars() {
         $token = GraphHelper::getUserToken();
         GraphHelper::$userClient->setAccessToken($token);
 
-        // $select = '$select=subject,bodyPreview'; // items you want to get from events
-        $requestUrl = '/me/events';
+        $select = '?$select=name,id,owner';
+        $requestUrl = '/me/calendars'.$select;
 
         return GraphHelper::$userClient->createCollectionRequest('GET', $requestUrl)
-                                            ->setReturnType(Model\Message::class)
+                                            ->setReturnType(Model\Calendar::class)
+                                            ->setPageSize(25);
+    }
+
+    public static function getCalendarEvents($id='') {
+        $token = GraphHelper::getUserToken();
+        GraphHelper::$userClient->setAccessToken($token);
+        
+        $select = '?$select=subject,bodyPreview,body,start,end,id,organizer';
+
+        if ($id == '') {
+            $requestUrl = '/me/events'.$select;
+        } else {
+            $requestUrl = '/me/calendars/'.$id.'/events'.$select;
+        }
+
+        return GraphHelper::$userClient->createCollectionRequest('GET', $requestUrl)
+                                            ->setReturnType(Model\Event::class)
                                             ->setPageSize(25);
 
     }
-    // </MakeGraphCallSnippet>
 }
 ?>
